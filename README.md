@@ -6,6 +6,9 @@ Set local Ruby versions for different directories as well as the global version.
 
 This is the script behind getrbenv.com.
 
+**For the impatient: Have a look at the [example](https://github.com/martinsteinorth/getrbenv-installer#example)
+or explore the available [options](https://github.com/martinsteinorth/getrbenv-installer#options).**
+
 ##Why you might want to use this installer
 
 Normally a Ruby installation on a server means that it's a system wide installation. So all your scripts run on the same
