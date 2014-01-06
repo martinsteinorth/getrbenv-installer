@@ -129,7 +129,7 @@ to Ruby version `1.9.3-p484`
 to Ruby version `1.9.3-p484` and directory `/path/to/mybrandnewapp` to Ruby version `2.1.0`
 
 
-####Globals Ruby version `--global-ruby`
+####Global Ruby version `--global-ruby`
 
 Defines the globally used Ruby version. This version is used if no local or shell version is set by rbenv.
 
