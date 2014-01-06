@@ -16,7 +16,7 @@ Ruby version. Not so cool if you have some older and some newer scripts that nee
 properly. Usually in the Ruby world this applies to different Rails projects that run on one server. For a Rails 3 app
 you might want to use an older 1.8 version of Ruby whilst your brand new Rails 4 app is recommended to use Ruby > 2.0.
 
-Therefore @sstephenson developed rbenv so you are able to choose between different Ruby versions for your applications
+Therefore [Sam Stephenson](https://github.com/sstephenson) developed [rbenv](https://github.com/sstephenson/rbenv) so you are able to choose between different Ruby versions for your applications
 that run side by side on one system. Even in production environments.
 
 In order to get rbenv working on your system some installation steps are necessary. Some of them include making changes
