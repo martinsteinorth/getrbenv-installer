@@ -175,12 +175,6 @@ clone_rbenv()
   git clone -q $DEFAULT_RBENV_REPO $install_dir/.rbenv 2>/dev/null
 }
 
-clone_ruby_build()
-{
-  print_info "Cloning ruby-build to $install_dir/.rbenv/plugins/ruby-build"
-  git clone -q $DEFAULT_RUBY_BUILD_REPO $install_dir/.rbenv/plugins/ruby-build 2>/dev/null
-}
-
 init_rbenv()
 {
   eval "$(rbenv init -)"
