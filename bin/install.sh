@@ -2,9 +2,9 @@
 ######### DEFAULTS #########
 
 DEFAULT_RBENV_REPO=https://github.com/sstephenson/rbenv.git
-DEFAULT_RUBY_BUILD_REPO=https://github.com/sstephenson/ruby-build.git
 DEFAULT_HOME_DIR=$HOME
 DEFAULT_INSTALL_DIR=$DEFAULT_HOME_DIR
+RUBY_BUILD_PLUGIN="sstephenson/ruby-build"
 
 POSSIBLE_SHELL_CONFIG_FILES=(
   ".profile"
@@ -14,7 +14,7 @@ POSSIBLE_SHELL_CONFIG_FILES=(
 )
 
 SUPPORTED_RBENV_PLUGINS=(
-  "sstephenson/ruby-build"
+  $RUBY_BUILD_PLUGIN
   "sstephenson/rbenv-vars"
   "sstephenson/rbenv-gem-rehash"
   "sstephenson/rbenv-default-gems"
@@ -40,6 +40,21 @@ COL_CYAN=$ESC_SEQ"36;01m"
 
 ######### FUNCTIONS #########
 
+array_contains_value()
+{
+  haystack=(${!1})
+  needle=$2
+  for value in ${haystack[@]}
+  do
+    if [ $value == $needle ]
+    then
+      return 0
+      break
+    fi
+  done
+  return 1
+}
+
 set_user_flags()
 {
   print_info "Checking your options"
@@ -48,9 +63,7 @@ set_user_flags()
   global_ruby=""
   shell_ruby=""
   local_ruby_combinations=()
-  plugins=(
-      "sstephenson/ruby-build"
-  )
+  plugins=()
 
   while
   (( $# > 0 ))
@@ -109,24 +122,22 @@ set_user_flags()
 
         for user_plugin in ${user_plugins[@]}
         do
-          plugin_supported="false"
-
-          for supported_plugin in ${SUPPORTED_RBENV_PLUGINS[@]}
-          do
-            if [ $user_plugin == $supported_plugin ]
-            then
-              plugin_supported="true"
-              plugins+=($supported_plugin)
-              break 1
-            fi
-          done
-
-          if  [ $plugin_supported == "false" ]
+          if array_contains_value SUPPORTED_RBENV_PLUGINS[@] $user_plugin
           then
+            if ! array_contains_value plugins[@] $user_plugin
+            then
+              plugins+=($user_plugin)
+            fi
+          else
             print_err "Plugin ${user_plugin} is not supported."
             user_flag_error=1
           fi
         done
+
+        if ! array_contains_value plugins[@] $RUBY_BUILD_PLUGIN
+        then
+          plugins+=($RUBY_BUILD_PLUGIN)
+        fi
 
         shift
       else
