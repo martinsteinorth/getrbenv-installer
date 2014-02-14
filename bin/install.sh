@@ -3,7 +3,7 @@
 
 DEFAULT_RBENV_REPO=https://github.com/sstephenson/rbenv.git
 DEFAULT_HOME_DIR=$HOME
-DEFAULT_INSTALL_DIR=$DEFAULT_HOME_DIR
+DEFAULT_INSTALL_DIR=$DEFAULT_HOME_DIR"/.rbenv"
 RUBY_BUILD_PLUGIN="sstephenson/ruby-build"
 
 POSSIBLE_SHELL_CONFIG_FILES=(
@@ -183,7 +183,7 @@ check_git()
 clone_rbenv()
 {
   print_info "Cloning rbenv to $install_dir"
-  git clone -q $DEFAULT_RBENV_REPO $install_dir/.rbenv 2>/dev/null
+  git clone -q $DEFAULT_RBENV_REPO $install_dir 2>/dev/null
 }
 
 init_rbenv()
@@ -207,7 +207,7 @@ install_plugins(){
   for plugin in ${plugins[@]}
   do
     plugin_name=${plugin#*/}
-    plugin_directory="${install_dir}/.rbenv/plugins/${plugin_name}"
+    plugin_directory="${install_dir}/plugins/${plugin_name}"
 
     if [ ! -d $plugin_directory ]
     then
@@ -252,7 +252,8 @@ write_exports_to_shell_config_files()
   print_info "Writing rbenv configuration to shell config files"
   for file in ${available_shell_config_files[@]}
   do
-    echo 'export PATH="'$install_dir'/.rbenv/bin:$PATH"' >> $DEFAULT_HOME_DIR/$file
+    echo 'export RBENV_ROOT=${install_dir}' >> $DEFAULT_HOME_DIR/$file
+    echo 'export PATH=${install_dir}/bin:$PATH' >> $DEFAULT_HOME_DIR/$file
     echo 'eval "$(rbenv init -)"' >> $DEFAULT_HOME_DIR/$file
 
     source $DEFAULT_HOME_DIR/$file
