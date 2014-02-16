@@ -77,7 +77,7 @@ set_user_flags()
       (--install-dir)
         if [[ -n "${value:-}" ]] && ! [ "${value:0:1}" == "-" ]
         then
-          install_dir="$value"
+          install_dir=${value%/}
           shift
         else
           print_err "--install-dir must be followed by a path."
@@ -234,7 +234,7 @@ set_local_rubies()
   do
     IFS=@ read -r -a user_local_ruby_combination_splitted <<< "$user_local_ruby_combination"
     version=${user_local_ruby_combination_splitted[0]}
-    directory=${user_local_ruby_combination_splitted[1]}
+    directory=${user_local_ruby_combination_splitted[1]%/}
 
     if [[ -n $version ]] && [[ -n $directory ]] && [[ -w $directory ]]
     then
