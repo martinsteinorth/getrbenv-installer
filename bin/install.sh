@@ -253,7 +253,7 @@ write_exports_to_shell_config_files()
   for file in ${available_shell_config_files[@]}
   do
     echo "export RBENV_ROOT=${install_dir}" >> $DEFAULT_HOME_DIR/$file
-    echo "export PATH=${install_dir}/bin:$PATH" >> $DEFAULT_HOME_DIR/$file
+    echo 'export PATH="$RBENV_ROOT/bin:$PATH"' >> $DEFAULT_HOME_DIR/$file
     echo 'eval "$(rbenv init -)"' >> $DEFAULT_HOME_DIR/$file
 
     export RBENV_ROOT=${install_dir}
